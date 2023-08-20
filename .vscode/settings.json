@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/ed02de2d-03bc-4392-bfc5-47d427bc8331/resourceGroups/rg-it-botalumnos-ceu-dev-we-001/providers/Microsoft.Web/sites/StreamGPTCEU",
+    "appService.deploySubpath": "."
+}

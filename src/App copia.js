@@ -47,8 +47,6 @@ const App = () => {
     recognizer.recognizeOnceAsync((result) => {
       if (result.reason === speechsdk.ResultReason.RecognizedSpeech) {
         setDisplayText(`RECOGNIZED: Text=${result.text}`);
-        chatInputRef.current.text = result.text; // Actualiza el input del chat con el texto reconocido
-        talk();
       } else {
         setDisplayText("ERROR: Speech was cancelled or could not be recognized. Ensure your microphone is working properly.");
       }
