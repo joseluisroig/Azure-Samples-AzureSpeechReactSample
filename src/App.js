@@ -17,6 +17,8 @@ const App = () => {
   const SPEECH_KEY = '0c029cad0e45489fa76bca71569b0f3e';
   const SPEECH_REGION = 'westeurope';
 
+  const AVATAR_IMG_URL = 'https://clips-presenters.d-id.com/rian/image.png';
+
   const getTokenOrRefresh = async () => {
     const response = await fetch(`https://${SPEECH_REGION}.api.cognitive.microsoft.com/sts/v1.0/issueToken`, {
       method: "POST",
@@ -272,7 +274,9 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div className="container">
+    <h2 className="text-center">Avatar Chat</h2>
+   
       <button onClick={sttFromMic}>Start STT from Mic</button>
       <p>{displayText}</p>
       <input ref={chatInputRef} type="text" placeholder="Type here for chat..." />
@@ -280,7 +284,7 @@ const App = () => {
       <button onClick={connect}>Connect</button>
       <button onClick={destroy}>Disconnect</button>
       <div ref={outputTextRef}></div>
-      <video ref={talkVideoRef} autoPlay playsInline  />
+      <video ref={talkVideoRef} autoPlay playsInline poster= {AVATAR_IMG_URL} />
     </div>
   );
 };
