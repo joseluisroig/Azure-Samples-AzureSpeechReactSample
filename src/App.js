@@ -288,5 +288,5 @@ const App = () => {
     </div>
   );
 };
-
+// Path: src/App.js
 export default App;
