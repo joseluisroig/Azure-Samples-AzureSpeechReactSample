@@ -47,7 +47,7 @@ const App = () => {
     recognizer.recognizeOnceAsync((result) => {
       if (result.reason === speechsdk.ResultReason.RecognizedSpeech) {
         setDisplayText(`RECOGNIZED: Text=${result.text}`);
-        chatInputRef.current.text = result.text; // Actualiza el input del chat con el texto reconocido
+        chatInputRef.current.value = result.text; // Actualiza el input del chat con el texto reconocido
         talk();
       } else {
         setDisplayText("ERROR: Speech was cancelled or could not be recognized. Ensure your microphone is working properly.");
@@ -170,7 +170,7 @@ const App = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          source_url: "https://create-images-results.d-id.com/auth0|646f6fd64196da85cb62a776/drm_AizDy3AWVTanxQ77oYOnJ/image.png"
+          source_url: "https://clips-presenters.d-id.com/rian/image.png"
         }),
       });
 
