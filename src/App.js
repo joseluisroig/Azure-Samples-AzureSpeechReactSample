@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as speechsdk from "microsoft-cognitiveservices-speech-sdk";
+import "./App.css";
+
 
 const App = () => {
   const [displayText, setDisplayText] = useState("INITIALIZED: ready to test speech...");
@@ -218,7 +220,7 @@ const App = () => {
 
     try {
       console.log("Trying to get chat response");
-      const response = await fetch(`https://ceu-chatcompletion-python.azurewebsites.net/api/ceuavatarcompletion?session_id=${sessionIdRef.current}&mensaje=${chatInputRef.current.value}&usuario=${usuario}`);
+      const response = await fetch(`https://ceu-chatcompletion-python.azurewebsites.net/api/ceuavatarcompletion?session_id=${streamIdRef.current}&mensaje=${chatInputRef.current.value}&usuario=${usuario}`);
       let chatText = await response.text();
       console.log("Received chat response:", chatText);
       if (!response.ok) {

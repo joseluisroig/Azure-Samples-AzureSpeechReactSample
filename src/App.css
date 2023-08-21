@@ -1,0 +1,46 @@
+/* App.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    cursor: pointer;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+button:disabled {
+    background-color: #c0c0c0;
+}
+
+.chat-box {
+    border: 1px solid #ddd;
+    padding: 20px;
+    height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.avatar-image {
+    display: block;
+    max-width: 100px;
+    margin: 20px auto;
+}
