@@ -10,7 +10,7 @@ const App = () => {
   const peerConnectionRef = useRef(null);
   const streamIdRef = useRef(null);
   const sessionIdRef = useRef(null);
-  const usuario = "joseluis";
+  const usuario = "joseluis"; // ver usuario
 
   const SPEECH_KEY = '0c029cad0e45489fa76bca71569b0f3e';
   const SPEECH_REGION = 'westeurope';
@@ -40,7 +40,7 @@ const App = () => {
   const sttFromMic = async () => {
     const tokenObj = await getTokenOrRefresh();
     const speechConfig = speechsdk.SpeechConfig.fromAuthorizationToken(tokenObj.authToken, tokenObj.region);
-    speechConfig.speechRecognitionLanguage = "en-US";
+    speechConfig.speechRecognitionLanguage = "es-ES";
     const audioConfig = speechsdk.AudioConfig.fromDefaultMicrophoneInput();
     const recognizer = new speechsdk.SpeechRecognizer(speechConfig, audioConfig);
     setDisplayText("speak into your microphone...");
