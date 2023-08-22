@@ -44,3 +44,9 @@ button:disabled {
     max-width: 100px;
     margin: 20px auto;
 }
+
+video {
+    width: 640px; /* Ancho deseado */
+    height: 660px; /* Altura deseada */
+    object-fit: cover; /* Esto hará que el video y la imagen póster se ajusten al tamaño especificado, manteniendo su relación de aspecto */
+}

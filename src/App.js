@@ -4,9 +4,9 @@ import "./App.css";
 
 
 const App = () => {
-  const [displayText, setDisplayText] = useState("INITIALIZED: ready to test speech...");
-  const chatInputRef = useRef(null);
-  const outputTextRef = useRef(null);
+  const [displayText, setDisplayText] = useState("Pulsa una vez para hablar.");
+  //const chatInputRef = useRef(null);
+  //const outputTextRef = useRef(null);
   const talkVideoRef = useRef(null);
 
   const peerConnectionRef = useRef(null);
@@ -39,6 +39,7 @@ const App = () => {
       }
     };
     initialize();
+    connect();
   }, []);
 
   const sttFromMic = async () => {
@@ -51,8 +52,8 @@ const App = () => {
     recognizer.recognizeOnceAsync((result) => {
       if (result.reason === speechsdk.ResultReason.RecognizedSpeech) {
         setDisplayText(`RECOGNIZED: Text=${result.text}`);
-        chatInputRef.current.value = result.text; // Actualiza el input del chat con el texto reconocido
-        talk();
+        //chatInputRef.current.value = result.text; // Actualiza el input del chat con el texto reconocido
+        talk(result.text);
       } else {
         setDisplayText("ERROR: Speech was cancelled or could not be recognized. Ensure your microphone is working properly.");
       }
@@ -208,7 +209,7 @@ const App = () => {
     }
   };
 
-  const talk = async () => {
+  const talk = async (user_message) => {
     console.log("Talk function invoked");
     if (peerConnectionRef.current?.signalingState !== 'stable' || peerConnectionRef.current?.iceConnectionState !== 'connected') {
       console.log("Peer connection is not stable or not connected, exiting function");
@@ -222,13 +223,13 @@ const App = () => {
 
     try {
       console.log("Trying to get chat response");
-      const response = await fetch(`https://ceu-chatcompletion-python.azurewebsites.net/api/ceuavatarcompletion?session_id=${streamIdRef.current}&mensaje=${chatInputRef.current.value}&usuario=${usuario}`);
+      const response = await fetch(`https://ceu-chatcompletion-python.azurewebsites.net/api/ceuavatarcompletion?session_id=${streamIdRef.current}&mensaje=${user_message}&usuario=${usuario}`);
       let chatText = await response.text();
       console.log("Received chat response:", chatText);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      outputTextRef.current.textContent = chatText;
+      //outputTextRef.current.textContent = chatText;
       console.log("Trying to initiate video streaming with D-ID API");
       await fetch(`${DID_API.url}/talks/streams/${streamIdRef.current}`, {
         method: 'POST',
@@ -274,19 +275,20 @@ const App = () => {
   };
 
   return (
-    <div className="container">
-    <h2 className="text-center">Avatar Chat</h2>
-   
-      <button onClick={sttFromMic}>Start STT from Mic</button>
+ <div className="container">
+
+      <h2 className="text-center">Avatar Chat</h2>
+      <video ref={talkVideoRef} autoPlay playsInline poster={AVATAR_IMG_URL} />
       <p>{displayText}</p>
-      <input ref={chatInputRef} type="text" placeholder="Type here for chat..." />
-      <button onClick={talk}>Talk</button>
-      <button onClick={connect}>Connect</button>
-      <button onClick={destroy}>Disconnect</button>
-      <div ref={outputTextRef}></div>
-      <video ref={talkVideoRef} autoPlay playsInline poster= {AVATAR_IMG_URL} />
+      
+   
+      
+      <button onClick={sttFromMic}>Pulsa para hablar</button>
     </div>
   );
 };
 // Path: src/App.js
+
+//<input ref={chatInputRef} type="text" placeholder="Type here for chat..." />
+//   <div ref={outputTextRef}></div>
 export default App;
