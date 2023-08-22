@@ -1,17 +1,23 @@
-name: Build and Deploy
+name: Azure Static Web Apps CI/CD
 
 on:
   push:
     branches:
       - main
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - main
 
 jobs:
-  build_and_deploy:
+  build_and_deploy_job:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
-
+    name: Build and Deploy Job
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
@@ -24,30 +30,26 @@ jobs:
       - name: Build project
         run: npm run build
 
-      # Uploading only the build directory as an artifact
-      - name: Archive production artifacts
-        uses: actions/upload-artifact@v2
+      - name: Build And Deploy
+        id: builddeploy
+        uses: Azure/static-web-apps-deploy@v1
         with:
-          name: build
-          path: build
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_NICE_MUD_067E0A403 }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+          action: "upload"
+          app_location: "build" # App source code path
+          api_location: "" # Api source code path - optional
+          output_location: "" # Built app content directory - optional
 
-  deploy:
-    needs: build_and_deploy
+  close_pull_request_job:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
-
+    name: Close Pull Request Job
     steps:
-      # Downloading only the build directory as an artifact
-      - name: Download build artifacts
-        uses: actions/download-artifact@v2
+      - name: Close Pull Request
+        id: closepullrequest
+        uses: Azure/static-web-apps-deploy@v1
         with:
-          name: build
-          path: build
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_NICE_MUD_067E0A403 }}
+          action: "close"
 
-      - name: 'Deploy to Azure Web App'
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: 'StreamGPTCEU'
-          slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_538FEB8EFBD640FCB3F4F645AABA28E8 }}
-          package: build # Deploying only the build directory
