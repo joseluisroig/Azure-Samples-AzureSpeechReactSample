@@ -3,8 +3,6 @@ import * as speechsdk from "microsoft-cognitiveservices-speech-sdk";
 import "./App.css";
 
 
-
-//  aa
 const App = () => {
   const [displayText, setDisplayText] = useState("Pulsa una vez para hablar.");
   //const chatInputRef = useRef(null);
@@ -210,9 +208,12 @@ const App = () => {
       console.error("Error during connection:", e);
     }
   };
+  if (talkVideoRef.current) {
+  talkVideoRef.current.play();
+}
 
   const talk = async (user_message) => {
-    connect();
+  
     console.log("Talk function invoked");
     if (peerConnectionRef.current?.signalingState !== 'stable' || peerConnectionRef.current?.iceConnectionState !== 'connected') {
       console.log("Peer connection is not stable or not connected, exiting function");
@@ -276,19 +277,42 @@ const App = () => {
   //  stopAllStreams();
   //  closePC();
   //};
-  const VideoGrid = ({ title }) => (
-    <div className="video-grid">
-      <h3>{title}</h3>
-      <video ref={talkVideoRef} autoPlay playsInline poster={AVATAR_IMG_URL} />
+
+  
+    const [isIframeVisible, setIframeVisibility] = useState(true);
+  
+    const handleIframePlay = () => {
+      setIframeVisibility(false);
+    };
+  
+
+  return (
+ <div className="container">
+
+      <h2 className="text-center">Avatar Chat</h2>
+      <video ref={talkVideoRef} autoPlay playsInline poster={AVATAR_IMG_URL}  />
       <p>{displayText}</p>
+      
+   
+      
       <button onClick={sttFromMic}>Pulsa para hablar</button>
       <button onClick={connect}>Pulsa para conectar</button>
-    </div>
-  );
-  return (
-  <div className="container">
-    <VideoGrid title='Título 1' />
-  </div>
+
+{isIframeVisible ? (
+  <iframe
+  title="Camarera"
+    width="560"
+    height="315"
+    src= "https://youtube.com/shorts/r7cz-n7USnI?si=t0q4Rrp7lnC5_dUY"
+    frameBorder="0"
+    allow="autoplay; encrypted-media"
+    allowFullScreen
+    onPlay={handleIframePlay}
+  ></iframe>
+) : (
+  <video ref={talkVideoRef} autoPlay playsInline poster={AVATAR_IMG_URL} />
+)}
+</div>  
   );
 };
 // Path: src/App.js
