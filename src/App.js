@@ -279,11 +279,7 @@ const App = () => {
   //};
 
   
-    const [isIframeVisible, setIframeVisibility] = useState(true);
-  
-    const handleIframePlay = () => {
-      setIframeVisibility(false);
-    };
+
   
 
   return (
@@ -298,20 +294,7 @@ const App = () => {
       <button onClick={sttFromMic}>Pulsa para hablar</button>
       <button onClick={connect}>Pulsa para conectar</button>
 
-{isIframeVisible ? (
-  <iframe
-  title="Camarera"
-    width="560"
-    height="315"
-    src= "https://youtube.com/shorts/r7cz-n7USnI?si=t0q4Rrp7lnC5_dUY"
-    frameBorder="0"
-    allow="autoplay; encrypted-media"
-    allowFullScreen
-    onPlay={handleIframePlay}
-  ></iframe>
-) : (
-  <video ref={talkVideoRef} autoPlay playsInline poster={AVATAR_IMG_URL} />
-)}
+
 </div>  
   );
 };
