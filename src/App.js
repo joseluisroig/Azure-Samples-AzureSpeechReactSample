@@ -39,7 +39,7 @@ const App = () => {
       }
     };
     initialize();
-    connect();
+
   }, []);
 
   const sttFromMic = async () => {
@@ -210,6 +210,7 @@ const App = () => {
   };
 
   const talk = async (user_message) => {
+    connect();
     console.log("Talk function invoked");
     if (peerConnectionRef.current?.signalingState !== 'stable' || peerConnectionRef.current?.iceConnectionState !== 'connected') {
       console.log("Peer connection is not stable or not connected, exiting function");
@@ -261,18 +262,18 @@ const App = () => {
     }
   };
 
-  const destroy = () => {
-    fetch(`${DID_API.url}/talks/streams/${streamIdRef.current}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Basic ${DID_API.key}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ session_id: sessionIdRef.current })
-    });
-    stopAllStreams();
-    closePC();
-  };
+  //const destroy = () => {
+  //  fetch(`${DID_API.url}/talks/streams/${streamIdRef.current}`, {
+  //    method: 'DELETE',
+  //    headers: {
+  //      'Authorization': `Basic ${DID_API.key}`,
+  //      'Content-Type': 'application/json'
+  //    },
+  //    body: JSON.stringify({ session_id: sessionIdRef.current })
+  //  });
+  //  stopAllStreams();
+  //  closePC();
+  //};
 
   return (
  <div className="container">
