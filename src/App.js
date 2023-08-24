@@ -3,6 +3,8 @@ import * as speechsdk from "microsoft-cognitiveservices-speech-sdk";
 import "./App.css";
 
 
+
+//  aa
 const App = () => {
   const [displayText, setDisplayText] = useState("Pulsa una vez para hablar.");
   //const chatInputRef = useRef(null);
@@ -274,18 +276,19 @@ const App = () => {
   //  stopAllStreams();
   //  closePC();
   //};
-
-  return (
- <div className="container">
-
-      <h2 className="text-center">Avatar Chat</h2>
+  const VideoGrid = ({ title }) => (
+    <div className="video-grid">
+      <h3>{title}</h3>
       <video ref={talkVideoRef} autoPlay playsInline poster={AVATAR_IMG_URL} />
       <p>{displayText}</p>
-      
-   
-      
       <button onClick={sttFromMic}>Pulsa para hablar</button>
+      <button onClick={connect}>Pulsa para conectar</button>
     </div>
+  );
+  return (
+  <div className="container">
+    <VideoGrid title='Título 1' />
+  </div>
   );
 };
 // Path: src/App.js
