@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as speechsdk from "microsoft-cognitiveservices-speech-sdk";
+
+
 import "./App.css";
 
 
@@ -12,12 +14,14 @@ const App = () => {
   const peerConnectionRef = useRef(null);
   const streamIdRef = useRef(null);
   const sessionIdRef = useRef(null);
-  const usuario = "joseluis"; // ver usuario
+  const usuario = "joseluis"; // ver usuario, poasar a variable no es constante
 
   const SPEECH_KEY = '0c029cad0e45489fa76bca71569b0f3e';
   const SPEECH_REGION = 'westeurope';
 
-  const AVATAR_IMG_URL = 'https://clips-presenters.d-id.com/rian/image.png';
+  let avatar_img_url = 'https://create-images-results.d-id.com/auth0%7C646f6fd64196da85cb62a776/upl_dtCm20p57vc6Gz-kKC8oW/image.jpeg';
+  let azure_voice_id= 'es-ES-DarioNeural'
+  let avatar = "roig";
 
   const getTokenOrRefresh = async () => {
     const response = await fetch(`https://${SPEECH_REGION}.api.cognitive.microsoft.com/sts/v1.0/issueToken`, {
@@ -175,7 +179,7 @@ const App = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          source_url: "https://clips-presenters.d-id.com/rian/image.png"
+          source_url: avatar_img_url
         }),
       });
 
@@ -186,7 +190,7 @@ const App = () => {
       sessionIdRef.current = newSessionId;
       console.log("StreamId:", streamIdRef.current);
       console.log("SessionId:", sessionIdRef.current);
-      console.log("IceServers:", iceServers);
+
       console.log("CREAMOS LA CONEXIÓN PeerConnection:");
       console.log("Offer:", offer);
       //llamada a creación de la conexión webRTC
@@ -221,13 +225,13 @@ const App = () => {
       console.log("Peer connection ice state:", peerConnectionRef.current?.iceConnectionState);
       console.log("Peer connection:", peerConnectionRef.current);
       console.log("StreamId", streamIdRef.current);
-      console.log("SessionId", sessionIdRef.current);
+
       return;
     }
 
     try {
       console.log("Trying to get chat response");
-      const response = await fetch(`https://ceu-chatcompletion-python.azurewebsites.net/api/ceuavatarcompletion?session_id=${streamIdRef.current}&mensaje=${user_message}&usuario=${usuario}`);
+      const response = await fetch(`https://ceu-chatcompletion-python.azurewebsites.net/api/ceuavatarcompletion?session_id=${streamIdRef.current}&mensaje=${user_message}&usuario=${usuario}&avatar=${avatar}`);
       let chatText = await response.text();
       console.log("Received chat response:", chatText);
       if (!response.ok) {
@@ -247,7 +251,7 @@ const App = () => {
             subtitles: 'false',
             provider: {
               type: 'microsoft',
-              voice_id: 'es-ES-DarioNeural'
+              voice_id: azure_voice_id
             },
             ssml: 'false',
             input: chatText
@@ -278,21 +282,53 @@ const App = () => {
   //  closePC();
   //};
 
-  
+  const configura_avatar = async (avatar) => {
+    console.log("Configura avatar function invoked");
+    console.log("Avatar:", avatar);
 
+    if (avatar === "camarero") {
+      console.log("Avatar: camarero");
+      //código para cambiar la imagen del avatar
+      avatar_img_url = 'https://clips-presenters.d-id.com/rian/image.png';
+      azure_voice_id= 'es-ES-AlvaroNeural'
+      talkVideoRef.current.poster = avatar_img_url;
+    }
+    if (avatar === "profesor_inglés") {
+      console.log("Avatar: profesor inglés");
+      //código para cambiar la imagen del avatar
+      avatar_img_url = 'https://create-images-results.d-id.com/DefaultPresenters/Emily_f/image.jpeg';
+      azure_voice_id= 'en-US-JennyNeural'
+      talkVideoRef.current.poster = avatar_img_url;
+    }
+    if (avatar === "entrevistador") {
+      console.log("Avatar: entrevistador");
+      //código para cambiar la imagen del avatar
+      avatar_img_url = 'https://create-images-results.d-id.com/DefaultPresenters/Brandon_m/image.png';
+      azure_voice_id= 'es-ES-DarioNeural'
+      talkVideoRef.current.poster = avatar_img_url;
+    }
+
+    await connect();
+    console.log("Configura avatar function completed successfully");
+  }
+
+  
   
 
   return (
  <div className="container">
 
       <h2 className="text-center">Avatar Chat</h2>
-      <video ref={talkVideoRef} autoPlay playsInline poster={AVATAR_IMG_URL}  />
+      <video ref={talkVideoRef} autoPlay playsInline poster={avatar_img_url}  />
       <p>{displayText}</p>
       
    
       
       <button onClick={sttFromMic}>Pulsa para hablar</button>
-      <button onClick={connect}>Pulsa para conectar</button>
+      <button onClick={() => configura_avatar("camarero")}>camarero</button>
+      <button onClick={() => configura_avatar("profesor_inglés")}>profesor inglés</button>
+      <button onClick={() => configura_avatar("entrevistador")}>entrevistador</button>
+
 
 
 </div>  
