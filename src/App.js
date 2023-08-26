@@ -19,12 +19,12 @@ const App = () => {
   const SPEECH_KEY = '0c029cad0e45489fa76bca71569b0f3e';
   const SPEECH_REGION = 'westeurope';
 
-  const [avatarImgUrl, setAvatarImgUrl] = useState('https://create-images-results.d-id.com/auth0%7C646f6fd64196da85cb62a776/upl_dtCm20p57vc6Gz-kKC8oW/image.jpeg');
-  const [azureVoiceId, setAzureVoiceId] = useState('es-ES-DarioNeural');
-  const [avatar, setAvatar] = useState('roig');
+  const avatarImgUrl = useRef('https://create-images-results.d-id.com/auth0%7C646f6fd64196da85cb62a776/upl_dtCm20p57vc6Gz-kKC8oW/image.jpeg');
+  const azureVoiceId = useRef('es-ES-DarioNeural');
+  const avatar = useRef('roig');
+  const speechRecognitionLanguage = useRef('es-ES');
 
-  const [speechRecognitionLanguage, setSpeechRecognitionLanguage] = useState('es-ES');
-  
+
 
   const getTokenOrRefresh = async () => {
     const response = await fetch(`https://${SPEECH_REGION}.api.cognitive.microsoft.com/sts/v1.0/issueToken`, {
@@ -299,33 +299,33 @@ const App = () => {
   };
 
   const configura_avatar = async (avatar_selecionado) => {
-    console.log("Configura avatar function invoked");
-    console.log("Avatar:", avatar);
+
     if (streamIdRef.current) { await destroy();}
-    setAvatar ( avatar_selecionado);
-    if (avatar === "camarero") {
+    avatar.current = avatar_selecionado;
+    console.log("Avatar:", avatar);
+    if (avatar.current === "camarero") {
       console.log("Avatar: camarero");
       //código para cambiar la imagen del avatar
-      setAvatarImgUrl( 'https://clips-presenters.d-id.com/rian/image.png');
-      setAzureVoiceId('AlvaroNeural')
-      setSpeechRecognitionLanguage('es-ES');
+      avatarImgUrl.current= ( 'https://clips-presenters.d-id.com/rian/image.png');
+      azureVoiceId.current=('AlvaroNeural')
+      speechRecognitionLanguage.current=('es-ES');
       talkVideoRef.current.poster = avatarImgUrl;
     }
-    if (avatar === "profesor_inglés") {
+    if (avatar.current === "profesor_inglés") {
       console.log("Avatar: profesor inglés");
       //código para cambiar la imagen del avatar
-      setAvatarImgUrl( 'https://create-images-results.d-id.com/DefaultPresenters/Emily_f/image.jpeg');
-      setAzureVoiceId( 'en-US-JennyNeural');
-      setSpeechRecognitionLanguage( "en-US");
+      avatarImgUrl.current=( 'https://create-images-results.d-id.com/DefaultPresenters/Emily_f/image.jpeg');
+      azureVoiceId.current=( 'en-US-JennyNeural');
+      speechRecognitionLanguage.current=( "en-US");
       
       talkVideoRef.current.poster = avatarImgUrl;
     }
-    if (avatar === "entrevistador") {
+    if (avatar.current === "entrevistador") {
       console.log("Avatar: entrevistador");
       //código para cambiar la imagen del avatar
-      setAvatarImgUrl( 'https://create-images-results.d-id.com/DefaultPresenters/Fatha_f/image.png');
-      setAzureVoiceId('es-ES-AbrilNeural' );
-      setSpeechRecognitionLanguage('es-ES');
+      avatarImgUrl.current=( 'https://create-images-results.d-id.com/DefaultPresenters/Fatha_f/image.png');
+      azureVoiceId.current=('es-ES-AbrilNeural' );
+      speechRecognitionLanguage.current('es-ES');
       talkVideoRef.current.poster = avatarImgUrl;
     }
 
@@ -341,9 +341,6 @@ const App = () => {
       <h2 className="text-center">Avatar Chat</h2>
       <video ref={talkVideoRef} autoPlay playsInline poster={avatarImgUrl}  />
       <p>{displayText}</p>
-      
-   
-      
       <button onClick={sttFromMic}>Pulsa para hablar</button>
       <button onClick={() => configura_avatar("camarero")}>camarero</button>
       <button onClick={() => configura_avatar("profesor_inglés")}>profesor inglés</button>
