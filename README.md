@@ -43,7 +43,7 @@ async sttFromMic() {
     recognizer.recognizeOnceAsync(result => {
         let displayText;
         if (result.reason === ResultReason.RecognizedSpeech) {
-            displayText = `RECOGNIZED: Text=${result.text}`
+            displayText = `Usuario: ${result.text}`
         } else {
             displayText = 'ERROR: Speech was cancelled or could not be recognized. Ensure your microphone is working properly.';
         }

@@ -22,6 +22,8 @@ const App = () => {
   let avatar_img_url = 'https://create-images-results.d-id.com/auth0%7C646f6fd64196da85cb62a776/upl_dtCm20p57vc6Gz-kKC8oW/image.jpeg';
   let azure_voice_id= 'es-ES-DarioNeural'
   let avatar = "roig";
+  let speechRecognitionLanguage = "es-ES";
+  
 
   const getTokenOrRefresh = async () => {
     const response = await fetch(`https://${SPEECH_REGION}.api.cognitive.microsoft.com/sts/v1.0/issueToken`, {
@@ -49,13 +51,13 @@ const App = () => {
   const sttFromMic = async () => {
     const tokenObj = await getTokenOrRefresh();
     const speechConfig = speechsdk.SpeechConfig.fromAuthorizationToken(tokenObj.authToken, tokenObj.region);
-    speechConfig.speechRecognitionLanguage = "es-ES";
+    speechConfig.speechRecognitionLanguage = speechRecognitionLanguage;
     const audioConfig = speechsdk.AudioConfig.fromDefaultMicrophoneInput();
     const recognizer = new speechsdk.SpeechRecognizer(speechConfig, audioConfig);
     setDisplayText("speak into your microphone...");
     recognizer.recognizeOnceAsync((result) => {
       if (result.reason === speechsdk.ResultReason.RecognizedSpeech) {
-        setDisplayText(`RECOGNIZED: Text=${result.text}`);
+        setDisplayText(`Usuario: ${result.text}`);
         //chatInputRef.current.value = result.text; // Actualiza el input del chat con el texto reconocido
         talk(result.text);
       } else {
@@ -291,6 +293,7 @@ const App = () => {
       //código para cambiar la imagen del avatar
       avatar_img_url = 'https://clips-presenters.d-id.com/rian/image.png';
       azure_voice_id= 'es-ES-AlvaroNeural'
+      speechRecognitionLanguage = "es-ES";
       talkVideoRef.current.poster = avatar_img_url;
     }
     if (avatar === "profesor_inglés") {
@@ -298,6 +301,7 @@ const App = () => {
       //código para cambiar la imagen del avatar
       avatar_img_url = 'https://create-images-results.d-id.com/DefaultPresenters/Emily_f/image.jpeg';
       azure_voice_id= 'en-US-JennyNeural'
+      speechRecognitionLanguage = "en-US";
       talkVideoRef.current.poster = avatar_img_url;
     }
     if (avatar === "entrevistador") {
@@ -305,6 +309,7 @@ const App = () => {
       //código para cambiar la imagen del avatar
       avatar_img_url = 'https://create-images-results.d-id.com/DefaultPresenters/Brandon_m/image.png';
       azure_voice_id= 'es-ES-DarioNeural'
+      speechRecognitionLanguage = "es-ES";
       talkVideoRef.current.poster = avatar_img_url;
     }
 
