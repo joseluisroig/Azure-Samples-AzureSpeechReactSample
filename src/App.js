@@ -19,10 +19,11 @@ const App = () => {
   const SPEECH_KEY = '0c029cad0e45489fa76bca71569b0f3e';
   const SPEECH_REGION = 'westeurope';
 
-  let avatar_img_url = 'https://create-images-results.d-id.com/auth0%7C646f6fd64196da85cb62a776/upl_dtCm20p57vc6Gz-kKC8oW/image.jpeg';
-  let azure_voice_id= 'es-ES-DarioNeural'
-  let avatar = "roig";
-  let speechRecognitionLanguage = "es-ES";
+  const [avatarImgUrl, setAvatarImgUrl] = useState('https://create-images-results.d-id.com/auth0%7C646f6fd64196da85cb62a776/upl_dtCm20p57vc6Gz-kKC8oW/image.jpeg');
+  const [azureVoiceId, setAzureVoiceId] = useState('es-ES-DarioNeural');
+  const [avatar, setAvatar] = useState('roig');
+
+  const [speechRecognitionLanguage, setSpeechRecognitionLanguage] = useState('es-ES');
   
 
   const getTokenOrRefresh = async () => {
@@ -95,15 +96,16 @@ const App = () => {
         }),
       });
     }
-  }
+  };
 
+ 
   const onIceConnectionStateChange = (event) => {
-    if (!peerConnectionRef.current) return;
-    console.log(`ICE Connection State Change: ${peerConnectionRef.current.iceConnectionState}`);
-    if (["failed", "disconnected", "closed"].includes(peerConnectionRef.current.iceConnectionState)) {
+
+    if (peerConnectionRef.current.iceConnectionState === 'failed' || peerConnectionRef.current.iceConnectionState === 'closed') {
+      stopAllStreams();
       closePC();
     }
-  };
+  }
 
   const onConnectionStateChange = (event) => {
     if (!peerConnectionRef.current) return;
@@ -142,7 +144,7 @@ const App = () => {
   };
 
   const createPeerConnection = async (offer, iceServers) => {
-   
+   try {
     if (!peerConnectionRef.current) {
       peerConnectionRef.current = new RTCPeerConnection({ iceServers });
       peerConnectionRef.current.addEventListener('icegatheringstatechange', onIceGatheringStateChange, true);
@@ -151,14 +153,25 @@ const App = () => {
       peerConnectionRef.current.addEventListener('connectionstatechange', onConnectionStateChange, true);
       peerConnectionRef.current.addEventListener('signalingstatechange', onSignalingStateChange, true);
       peerConnectionRef.current.addEventListener('track', onTrack, true);
-    }
-    await peerConnectionRef.current.setRemoteDescription(offer);
-    const answer = await peerConnectionRef.current.createAnswer();
-    await peerConnectionRef.current.setLocalDescription(answer);
-    console.log("answer de create connection:", answer);
    
-    console.log("peerConnectionRef.current:", peerConnectionRef.current);
+      console.log("iceserver", iceServers);
+      console.log("peerConnectionRef.current:", peerConnectionRef.current);
+      console.log("offer:", offer);
+      await peerConnectionRef.current.setRemoteDescription(offer);
+      const answer = await peerConnectionRef.current.createAnswer();
+     await peerConnectionRef.current.setLocalDescription(answer);
+      console.log("answer de create connection:", answer);
+   
+      console.log("peerConnectionRef.current:", peerConnectionRef.current);
+    
+      return answer;
+    }
+  } catch (e) {
+    console.error("Error during createPeerConnection:", e);
+    const answer = null;
     return answer;
+  }
+  
   };
   
   
@@ -181,7 +194,7 @@ const App = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          source_url: avatar_img_url
+          source_url: avatarImgUrl
         }),
       });
 
@@ -236,6 +249,7 @@ const App = () => {
       const response = await fetch(`https://ceu-chatcompletion-python.azurewebsites.net/api/ceuavatarcompletion?session_id=${streamIdRef.current}&mensaje=${user_message}&usuario=${usuario}&avatar=${avatar}`);
       let chatText = await response.text();
       console.log("Received chat response:", chatText);
+      setDisplayText(`Avatar: ${chatText}`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -253,7 +267,7 @@ const App = () => {
             subtitles: 'false',
             provider: {
               type: 'microsoft',
-              voice_id: azure_voice_id
+              voice_id: azureVoiceId
             },
             ssml: 'false',
             input: chatText
@@ -271,60 +285,61 @@ const App = () => {
     }
   };
 
-  //const destroy = () => {
-  //  fetch(`${DID_API.url}/talks/streams/${streamIdRef.current}`, {
-  //    method: 'DELETE',
-  //    headers: {
-  //      'Authorization': `Basic ${DID_API.key}`,
-  //      'Content-Type': 'application/json'
-  //    },
-  //    body: JSON.stringify({ session_id: sessionIdRef.current })
-  //  });
-  //  stopAllStreams();
-  //  closePC();
-  //};
+  const destroy = () => {
+      fetch(`${DID_API.url}/talks/streams/${streamIdRef.current}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Basic ${DID_API.key}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ session_id: sessionIdRef.current })
+    });
+    stopAllStreams();
+    closePC();
+  };
 
-  const configura_avatar = async (avatar) => {
+  const configura_avatar = async (avatar_selecionado) => {
     console.log("Configura avatar function invoked");
     console.log("Avatar:", avatar);
-
+    if (streamIdRef.current) { await destroy();}
+    setAvatar ( avatar_selecionado);
     if (avatar === "camarero") {
       console.log("Avatar: camarero");
       //código para cambiar la imagen del avatar
-      avatar_img_url = 'https://clips-presenters.d-id.com/rian/image.png';
-      azure_voice_id= 'es-ES-AlvaroNeural'
-      speechRecognitionLanguage = "es-ES";
-      talkVideoRef.current.poster = avatar_img_url;
+      setAvatarImgUrl( 'https://clips-presenters.d-id.com/rian/image.png');
+      setAzureVoiceId('AlvaroNeural')
+      setSpeechRecognitionLanguage('es-ES');
+      talkVideoRef.current.poster = avatarImgUrl;
     }
     if (avatar === "profesor_inglés") {
       console.log("Avatar: profesor inglés");
       //código para cambiar la imagen del avatar
-      avatar_img_url = 'https://create-images-results.d-id.com/DefaultPresenters/Emily_f/image.jpeg';
-      azure_voice_id= 'en-US-JennyNeural'
-      speechRecognitionLanguage = "en-US";
-      talkVideoRef.current.poster = avatar_img_url;
+      setAvatarImgUrl( 'https://create-images-results.d-id.com/DefaultPresenters/Emily_f/image.jpeg');
+      setAzureVoiceId( 'en-US-JennyNeural');
+      setSpeechRecognitionLanguage( "en-US");
+      
+      talkVideoRef.current.poster = avatarImgUrl;
     }
     if (avatar === "entrevistador") {
       console.log("Avatar: entrevistador");
       //código para cambiar la imagen del avatar
-      avatar_img_url = 'https://create-images-results.d-id.com/DefaultPresenters/Brandon_m/image.png';
-      azure_voice_id= 'es-ES-DarioNeural'
-      speechRecognitionLanguage = "es-ES";
-      talkVideoRef.current.poster = avatar_img_url;
+      setAvatarImgUrl( 'https://create-images-results.d-id.com/DefaultPresenters/Fatha_f/image.png');
+      setAzureVoiceId('es-ES-AbrilNeural' );
+      setSpeechRecognitionLanguage('es-ES');
+      talkVideoRef.current.poster = avatarImgUrl;
     }
 
     await connect();
     console.log("Configura avatar function completed successfully");
   }
 
-  
-  
 
+  
   return (
  <div className="container">
 
       <h2 className="text-center">Avatar Chat</h2>
-      <video ref={talkVideoRef} autoPlay playsInline poster={avatar_img_url}  />
+      <video ref={talkVideoRef} autoPlay playsInline poster={avatarImgUrl}  />
       <p>{displayText}</p>
       
    
@@ -333,7 +348,7 @@ const App = () => {
       <button onClick={() => configura_avatar("camarero")}>camarero</button>
       <button onClick={() => configura_avatar("profesor_inglés")}>profesor inglés</button>
       <button onClick={() => configura_avatar("entrevistador")}>entrevistador</button>
-
+      <button onClick={() => configura_avatar("roig")}>asistente joseluis</button>
 
 
 </div>  
