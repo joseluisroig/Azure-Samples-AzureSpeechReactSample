@@ -33,7 +33,7 @@ const App = () => {
   const avatar = useRef('roig');
   const speechRecognitionLanguage = useRef('es-ES');
   //variable modo video que solo puede ser VIDDEO o AUDIO
-  const modoVideoAudioChat = useRef('VIDEO');
+ // const modoVideoAudioChat = useRef('VIDEO');
 
 
 
