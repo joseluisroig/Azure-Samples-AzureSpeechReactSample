@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as speechsdk from "microsoft-cognitiveservices-speech-sdk";
 import TextToSpeech from './TextToSpeech.js';
-
+import FileUpload from './FileUpload';
 import "./App.css";
 
 
@@ -392,10 +392,11 @@ const App = () => {
       <div className="App">
       <h1>Text to Speech con Azure</h1>
       <TextToSpeech />
-    </div>
+      <FileUpload />
+      </div>
 </div>  
   );
-};
+}; 
 // Path: src/App.js
 
 //<input ref={chatInputRef} type="text" placeholder="Type here for chat..." />
