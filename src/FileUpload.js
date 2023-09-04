@@ -13,6 +13,9 @@ const FileUpload = () => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('file', file);
+    //pasa también el nombbre del usuario
+    formData.append('avatar', avatar);
+
 
     try {
       const res = await axios.post(
