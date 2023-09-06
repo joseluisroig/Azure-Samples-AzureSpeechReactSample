@@ -14,9 +14,9 @@ const FileUpload = () => {
     const formData = new FormData();
     formData.append('file', file);
     //pasa también el nombbre del usuario
-    formData.append('avatar', avatar);
+    //formData.append('avatar', avatar);
 
-
+  
     try {
       const res = await axios.post(
         'https://ceu-chatcompletion-python.azurewebsites.net/api/fileblobupload',
