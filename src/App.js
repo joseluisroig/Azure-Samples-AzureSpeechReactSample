@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as speechsdk from "microsoft-cognitiveservices-speech-sdk";
-import TextToSpeech from './TextToSpeech.js';
-import FileUpload from './FileUpload';
+//import TextToSpeech from './TextToSpeech.js';
+//import FileUpload from './FileUpload';
+
+
 import "./App.css";
 
 
@@ -378,25 +380,30 @@ const App = () => {
 
   
   return (
- <div className="container">
+   
+    <div className="container">
+      
 
-      <h2 className="text-center">Avatar Chat</h2>
-      <video ref={talkVideoRef} autoPlay playsInline poster={avatarImgUrl.current}  />
-      <p>{displayText}</p>
-      <button onClick={sttFromMic}>Pulsa para hablar</button>
-      <button onClick={() => configura_avatar("camarero")}>camarero</button>
-      <button onClick={() => configura_avatar("profesor_ingles")}>profesor inglés</button>
-      <button onClick={() => configura_avatar("entrevistador")}>entrevistador</button>
-      <button onClick={() => configura_avatar("roig")}>asistente joseluis</button>
-
-      <div className="App">
-      <h1>Text to Speech con Azure</h1>
-      <TextToSpeech />
-      <FileUpload />
-      </div>
-</div>  
+      
+      <header className="header">
+        
+        <h2 className="text-center">Avatar Chat</h2>
+        <nav className="menu">
+          <button onClick={() => configura_avatar("camarero")}>Camarero</button>
+          <button onClick={() => configura_avatar("profesor_ingles")}>Profesor de Inglés</button>
+          <button onClick={() => configura_avatar("entrevistador")}>Entrevistador</button>
+          <button onClick={() => configura_avatar("roig")}>Asistente Joseluis</button>
+        </nav>
+      </header>
+      
+      <main>
+        <video ref={talkVideoRef} autoPlay playsInline poster={avatarImgUrl.current} />
+        <p>{displayText}</p>
+        <button onClick={sttFromMic}>Pulsa para hablar</button>
+      </main>
+    </div>
   );
-}; 
+  }  
 // Path: src/App.js
 
 //<input ref={chatInputRef} type="text" placeholder="Type here for chat..." />
