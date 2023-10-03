@@ -352,8 +352,9 @@ const App = () => {
     if (avatar.current === "camarero") {
       console.log("Avatar: camarero");
       //código para cambiar la imagen del avatar
-      avatarImgUrl.current= ( 'https://clips-presenters.d-id.com/rian/image.png');
-      azureVoiceId.current=('es-ES-DarioNeural')
+      avatarImgUrl.current= ( 'https://create-images-results.d-id.com/auth0%7C646f6fd64196da85cb62a776/upl_MZy9FT2b8YUyoP1eTHSzK/image.png');
+      //azureVoiceId.current=('es-ES-DarioNeural')
+      azureVoiceId.current=( 'en-US-JennyNeural');
       speechRecognitionLanguage.current=('es-ES');
       //talkVideoRef.current.poster = avatarImgUrl.current;
       indexConnection = 0;
