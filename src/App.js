@@ -37,8 +37,8 @@ const App = () => {
   //variable modo video que solo puede ser VIDDEO o AUDIO
  // const modoVideoAudioChat = useRef('VIDEO');
 
- const urlParams = new URLSearchParams(window.location.search);
- const avatarType = urlParams.get('avatar');
+ //const urlParams = new URLSearchParams(window.location.search);
+ //const avatarType = urlParams.get('avatar');
  
 
   const getTokenOrRefresh = async () => {
@@ -352,20 +352,22 @@ const App = () => {
     if (avatar.current === "camarero") {
       console.log("Avatar: camarero");
       //código para cambiar la imagen del avatar
-      avatarImgUrl.current= ( 'https://create-images-results.d-id.com/auth0%7C646f6fd64196da85cb62a776/upl_MZy9FT2b8YUyoP1eTHSzK/image.png');
+      avatarImgUrl.current= ( 'https://create-images-results.d-id.com/auth0%7C646f6fd64196da85cb62a776/upl_SIDLEhu5iJYaIUfpHOMEY/image.png');
       //azureVoiceId.current=('es-ES-DarioNeural')
-      azureVoiceId.current=( 'en-US-JennyNeural');
+      //azureVoiceId.current=( 'en-US-JennyNeural');
+      azureVoiceId.current=('es-ES-LiaNeural' );
+
       speechRecognitionLanguage.current=('es-ES');
-      //talkVideoRef.current.poster = avatarImgUrl.current;
+      talkVideoRef.current.poster = avatarImgUrl.current;
       indexConnection = 0;
     }
     if (avatar.current === "profesor_ingles") {
       console.log("Avatar: profesor inglés");
       //código para cambiar la imagen del avatar
-      avatarImgUrl.current=( 'https://create-images-results.d-id.com/DefaultPresenters/Emily_f/image.jpeg');
+      avatarImgUrl.current=( 'https://create-images-results.d-id.com/auth0%7C646f6fd64196da85cb62a776/upl_EBYTrT9M9PueWQMoUwfBW/image.png');
       azureVoiceId.current=( 'en-US-JennyNeural');
       speechRecognitionLanguage.current=( "en-US");
-      //talkVideoRef.current.poster = avatarImgUrl.current;
+      talkVideoRef.current.poster = avatarImgUrl.current;
       indexConnection = 1;
     }
     if (avatar.current === "entrevistador") {
@@ -374,7 +376,7 @@ const App = () => {
       avatarImgUrl.current=( 'https://create-images-results.d-id.com/DefaultPresenters/Fatha_f/image.png');
       azureVoiceId.current=('es-ES-LiaNeural' );
       speechRecognitionLanguage.current =('es-ES');
-      //talkVideoRef.current.poster = avatarImgUrl.current;
+      talkVideoRef.current.poster = avatarImgUrl.current;
       indexConnection = 2;
     }
     if (avatar.current === "roig") {
@@ -383,7 +385,7 @@ const App = () => {
       avatarImgUrl.current=(IMG_URL_ROIG);
       azureVoiceId.current=('es-ES-DarioNeural');
       speechRecognitionLanguage.current =('es-ES');
-      //talkVideoRef.current.poster = avatarImgUrl.current;
+      talkVideoRef.current.poster = avatarImgUrl.current;
       indexConnection = 3;
     }
     //talkVideoRef.current.poster = avatarImgUrl.current;
