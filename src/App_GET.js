@@ -367,8 +367,9 @@ const MiComponente = () => {
       if (avatar.current === "entrevistador") {
         console.log("Avatar: entrevistador");
         //código para cambiar la imagen del avatar
-        avatarImgUrl.current=( 'https://clips-presenters.d-id.com/lily/ldwi8a_LdG/Zz10FZua2P/image.png');
-        azureVoiceId.current=('es-ES-LiaNeural' );
+        avatarImgUrl.current=( 'https://create-images-results.d-id.com/auth0%7C646f6fd64196da85cb62a776/upl_rE88Wu1Wn2ssGvSG_tR4-/image.png');
+        //azureVoiceId.current=('es-ES-LiaNeural' );
+        azureVoiceId.current=('es-ES-DarioNeural');
         speechRecognitionLanguage.current =('es-ES');
         talkVideoRef.current.poster = avatarImgUrl.current;
         //indexConnection = 2;
@@ -405,15 +406,6 @@ const MiComponente = () => {
   </main>
   );
 };
-
-
-
-
-
-
- 
-
-
 
 
 

@@ -342,10 +342,14 @@ const App = () => {
     }
   };
 
-
+  const [botonesDesactivados, setBotonesDesactivados] = useState(false)
+  const toggleBotones = () => {
+    setBotonesDesactivados(!botonesDesactivados);
+  };
 
   const configura_avatar = async (avatar_selecionado) => {
-
+    //desactiva botones
+    setBotonesDesactivados(true);
     if (peerConnectionRef.current[indexConnection].connection) { await closePC();}
     avatar.current = avatar_selecionado;
     console.log("Avatar:", avatar);
@@ -373,8 +377,9 @@ const App = () => {
     if (avatar.current === "entrevistador") {
       console.log("Avatar: entrevistador");
       //código para cambiar la imagen del avatar
-      avatarImgUrl.current=( 'https://create-images-results.d-id.com/DefaultPresenters/Fatha_f/image.png');
-      azureVoiceId.current=('es-ES-LiaNeural' );
+      avatarImgUrl.current=( 'https://create-images-results.d-id.com/auth0%7C646f6fd64196da85cb62a776/upl_rE88Wu1Wn2ssGvSG_tR4-/image.png');
+      //azureVoiceId.current=('es-ES-LiaNeural' );
+      azureVoiceId.current=('es-ES-DarioNeural');
       speechRecognitionLanguage.current =('es-ES');
       talkVideoRef.current.poster = avatarImgUrl.current;
       indexConnection = 2;
@@ -392,6 +397,8 @@ const App = () => {
     userRefIndexConnection.current = indexConnection;
     await connect(indexConnection);
     console.log("Configura avatar function completed successfully");
+    //activa botones
+    setBotonesDesactivados(false);
   }
   useEffect(() => {
     if (talkVideoRef.current) {
@@ -411,10 +418,13 @@ const App = () => {
         
         <h2 className="text-center">Avatar Chat</h2>
         <nav className="menu">
-          <button onClick={() => configura_avatar("camarero")}>Camarero</button>
-          <button onClick={() => configura_avatar("profesor_ingles")}>Profesor de Inglés</button>
-          <button onClick={() => configura_avatar("entrevistador")}>Entrevistador</button>
-          <button onClick={() => configura_avatar("roig")}>Asistente Joseluis</button>
+        <div>
+          <button onClick={() => configura_avatar("camarero")} disabled={botonesDesactivados}>Camarero</button>
+          <button onClick={() => configura_avatar("profesor_ingles")} disabled={botonesDesactivados}>Profesor de Inglés</button>
+          <button onClick={() => configura_avatar("entrevistador")} disabled={botonesDesactivados}>Entrevistador</button>
+          <button onClick={() => configura_avatar("roig")} disabled={botonesDesactivados}>Asistente Joseluis</button>
+          <button onClick={toggleBotones}>{botonesDesactivados ? 'Activar' : 'Desactivar'} Botones</button>
+       </div>
         </nav>
       </header>
       
