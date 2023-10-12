@@ -11,6 +11,7 @@ const App = () => {
   const [displayText, setDisplayText] = useState("Pulsa una vez para hablar.");
   //const chatInputRef = useRef(null);
   //const outputTextRef = useRef(null);
+  console.log("Avatar streaming:");
   const talkVideoRef = useRef(null);
 
   //const peerConnectionRef = useRef(null);
@@ -29,16 +30,57 @@ const App = () => {
 
   const SPEECH_KEY = '0c029cad0e45489fa76bca71569b0f3e';
   const SPEECH_REGION = 'westeurope';
-  const IMG_URL_ROIG = 'https://create-images-results.d-id.com/auth0%7C646f6fd64196da85cb62a776/upl_dtCm20p57vc6Gz-kKC8oW/image.jpeg';
-  const avatarImgUrl = useRef(IMG_URL_ROIG);
-  const azureVoiceId = useRef('es-ES-DarioNeural');
-  const avatar = useRef('roig');
-  const speechRecognitionLanguage = useRef('es-ES');
+  //const IMG_URL_ROIG = 'https://create-images-results.d-id.com/auth0%7C646f6fd64196da85cb62a776/upl_dtCm20p57vc6Gz-kKC8oW/image.jpeg';
+  
+  //const [avatarType, setAvatarType] = useState('algún_valor_inicial');
+  const [avatarImgUrl, setAvatarImgUrl] = useState('');
+  const [azureVoiceId, setAzureVoiceId] = useState('');
+  const [speechRecognitionLanguage, setSpeechRecognitionLanguage] = useState('');
+  const [avatar, setAvatar] = useState('roig'); // Changed from useRef to useState
+  
+  
+  //// Removed this line as it's now managed by useState
+  //// Removed this line as it's now managed by useState
+  //const avatar = useRef('roig');
+  //// Removed this line as it's now managed by useState
   //variable modo video que solo puede ser VIDDEO o AUDIO
  // const modoVideoAudioChat = useRef('VIDEO');
 
- //const urlParams = new URLSearchParams(window.location.search);
- //const avatarType = urlParams.get('avatar');
+ const urlParams = new URLSearchParams(window.location.search);
+ const avatarType = urlParams.get('avatar');
+ console.log("avatarType:", avatarType);
+ //setDisplayText(avatarType);
+// 
+
+// ...
+useEffect(() => {
+  // Fetching avatar configuration based on avatarType
+  (async () => {
+    const url = `https://ceu-chatcompletion-python.azurewebsites.net/api/ceuavatarconfigure?avatar_type=${avatarType}`;
+    try {
+      const response = await fetch(url);
+      if (response.ok) {
+        const jsonResponse = await response.json();
+        setAvatarImgUrl(jsonResponse['avatarImgUrl']);
+        setAzureVoiceId(jsonResponse['azureVoiceId']);
+        setSpeechRecognitionLanguage(jsonResponse['speechRecognitionLanguage']);
+        setAvatar(avatarType);
+
+      }
+    } catch (error) {
+      console.error('Hubo un error:', error);
+    }
+    console.log('url:', url);
+  })();
+}, [avatarType]); // Added avatarType to the dependency array
+// ...
+
+
+  
+
+
+
+  
  
 
   const getTokenOrRefresh = async () => {
@@ -67,17 +109,19 @@ const App = () => {
   const sttFromMic = async () => {
     const tokenObj = await getTokenOrRefresh();
     const speechConfig = speechsdk.SpeechConfig.fromAuthorizationToken(tokenObj.authToken, tokenObj.region);
-    speechConfig.speechRecognitionLanguage = speechRecognitionLanguage.current;
+    speechConfig.speechRecognitionLanguage = speechRecognitionLanguage;
     const audioConfig = speechsdk.AudioConfig.fromDefaultMicrophoneInput();
     const recognizer = new speechsdk.SpeechRecognizer(speechConfig, audioConfig);
-    setDisplayText("speak into your microphone...");
+    setDisplayText("espera un momento...");
+    await connect(0);
+    setDisplayText("habla con el micro...");
     recognizer.recognizeOnceAsync((result) => {
       if (result.reason === speechsdk.ResultReason.RecognizedSpeech) {
         setDisplayText(`Usuario: ${result.text}`);
         //chatInputRef.current.value = result.text; // Actualiza el input del chat con el texto reconocido
         talk(result.text);
       } else {
-        setDisplayText("ERROR: Speech was cancelled or could not be recognized. Ensure your microphone is working properly.");
+        setDisplayText(" No se ha podido reconocer Asegura que el micro funciona bien.");
       }
     });
   };
@@ -185,7 +229,7 @@ const App = () => {
 
     try {
      if (!peerConnectionRef?.current[indexConnection]?.connection)  {  
-      console.log("PASO 2 creatrePeerConnection")
+    
       console.log("peerConnectionRef.current[indexConnection].connection.connectionState:", peerConnectionRef.current[indexConnection].connection?.connectionState);
       //if ( peerConnectionRef.current?.connectionState === 'disconnected' || peerConnectionRef.current?.connectionState === 'failed' || peerConnectionRef.current?.connectionState === 'closed' || peerConnectionRef.current.connectionState === null) {
       console.log("PASO 3 ICESERVERS EN CONFIGURACION:",iceServers);
@@ -254,7 +298,7 @@ const App = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          source_url: avatarImgUrl.current
+          source_url: avatarImgUrl
         }),
       });
 
@@ -324,7 +368,7 @@ const App = () => {
             subtitles: 'false',
             provider: {
               type: 'microsoft',
-              voice_id: azureVoiceId.current
+              voice_id: azureVoiceId
             },
             ssml: 'false',
             input: chatText
@@ -342,71 +386,19 @@ const App = () => {
     }
   };
 
-  const [botonesDesactivados, setBotonesDesactivados] = useState(false)
-  const toggleBotones = () => {
-    setBotonesDesactivados(!botonesDesactivados);
-  };
 
-  const configura_avatar = async (avatar_selecionado) => {
-    //desactiva botones
-    setBotonesDesactivados(true);
-    if (peerConnectionRef.current[indexConnection].connection) { await closePC();}
-    avatar.current = avatar_selecionado;
-    console.log("Avatar:", avatar);
-    if (avatar.current === "camarero") {
-      console.log("Avatar: camarero");
-      //código para cambiar la imagen del avatar
-      avatarImgUrl.current= ( 'https://create-images-results.d-id.com/auth0%7C646f6fd64196da85cb62a776/upl_SIDLEhu5iJYaIUfpHOMEY/image.png');
-      //azureVoiceId.current=('es-ES-DarioNeural')
-      //azureVoiceId.current=( 'en-US-JennyNeural');
-      azureVoiceId.current=('es-ES-LiaNeural' );
 
-      speechRecognitionLanguage.current=('es-ES');
-      talkVideoRef.current.poster = avatarImgUrl.current;
-      indexConnection = 0;
-    }
-    if (avatar.current === "profesor_ingles") {
-      console.log("Avatar: profesor inglés");
-      //código para cambiar la imagen del avatar
-      avatarImgUrl.current=( 'https://create-images-results.d-id.com/auth0%7C646f6fd64196da85cb62a776/upl_EBYTrT9M9PueWQMoUwfBW/image.png');
-      azureVoiceId.current=( 'en-US-JennyNeural');
-      speechRecognitionLanguage.current=( "en-US");
-      talkVideoRef.current.poster = avatarImgUrl.current;
-      indexConnection = 1;
-    }
-    if (avatar.current === "entrevistador") {
-      console.log("Avatar: entrevistador");
-      //código para cambiar la imagen del avatar
-      avatarImgUrl.current=( 'https://create-images-results.d-id.com/auth0%7C646f6fd64196da85cb62a776/upl_rE88Wu1Wn2ssGvSG_tR4-/image.png');
-      //azureVoiceId.current=('es-ES-LiaNeural' );
-      azureVoiceId.current=('es-ES-DarioNeural');
-      speechRecognitionLanguage.current =('es-ES');
-      talkVideoRef.current.poster = avatarImgUrl.current;
-      indexConnection = 2;
-    }
-    if (avatar.current === "roig") {
-      console.log("Avatar: roig");
-      //código para cambiar la imagen del avatar
-      avatarImgUrl.current=(IMG_URL_ROIG);
-      azureVoiceId.current=('es-ES-DarioNeural');
-      speechRecognitionLanguage.current =('es-ES');
-      talkVideoRef.current.poster = avatarImgUrl.current;
-      indexConnection = 3;
-    }
-    //talkVideoRef.current.poster = avatarImgUrl.current;
-    userRefIndexConnection.current = indexConnection;
-    await connect(indexConnection);
-    console.log("Configura avatar function completed successfully");
-    //activa botones
-    setBotonesDesactivados(false);
-  }
+  
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (talkVideoRef.current) {
-      talkVideoRef.current.poster = avatarImgUrl.current;
+      talkVideoRef.current.poster = avatarImgUrl;
     }
+    // eslint-disable-next-line
   }, []); // Las dependencias están vacías, por lo que esto se ejecutará sólo una vez después del montaje del componente
   
- 
+ //connect(0);
   
   return (
    
@@ -416,20 +408,11 @@ const App = () => {
       
       <header className="header">
         
-        <h2 className="text-center">Avatar Chat</h2>
-        <nav className="menu">
-        <div>
-          <button onClick={() => configura_avatar("camarero")} disabled={botonesDesactivados}>Camarero</button>
-          <button onClick={() => configura_avatar("profesor_ingles")} disabled={botonesDesactivados}>Profesor de Inglés</button>
-          <button onClick={() => configura_avatar("entrevistador")} disabled={botonesDesactivados}>Entrevistador</button>
-          <button onClick={() => configura_avatar("roig")} disabled={botonesDesactivados}>Asistente Joseluis</button>
-          <button onClick={toggleBotones}>{botonesDesactivados ? 'Activar' : 'Desactivar'} Botones</button>
-       </div>
-        </nav>
+
       </header>
       
       <main>
-        <video ref={talkVideoRef} autoPlay playsInline poster={avatarImgUrl.current} />
+        <video ref={talkVideoRef} autoPlay playsInline poster={avatarImgUrl} />
         <p>{displayText}</p>
         <button onClick={sttFromMic}>Pulsa para hablar</button>
       </main>
