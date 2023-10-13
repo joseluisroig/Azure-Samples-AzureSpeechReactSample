@@ -76,13 +76,6 @@ useEffect(() => {
 // ...
 
 
-  
-
-
-
-  
- 
-
   const getTokenOrRefresh = async () => {
     const response = await fetch(`https://${SPEECH_REGION}.api.cognitive.microsoft.com/sts/v1.0/issueToken`, {
       method: "POST",
