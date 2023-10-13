@@ -36,7 +36,7 @@ p {
 }
 
 button {
-    bottom: 10px;
+    bottom: env(safe-area-inset-bottom, 10px); /* Usar el área segura si está disponible, de lo contrario, usar 10px */
     left: 10px;
     cursor: pointer;
     padding: 10px 20px;
@@ -55,8 +55,9 @@ button:hover {
 /* Ajustes para pantallas pequeñas */
 @media (max-height: 600px) {
     button {
-        bottom: 5px;
+        bottom: calc(env(safe-area-inset-bottom, 5px) + 5px); /* Añadir 5px adicionales para más espacio */
     }
 }
+
 
 
