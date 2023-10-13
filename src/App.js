@@ -48,7 +48,7 @@ const App = () => {
 
  const urlParams = new URLSearchParams(window.location.search);
  const avatarType = urlParams.get('avatar');
- const usuarioType = urlParams.get('usuario');
+ const usuario = urlParams.get('usuario');
  console.log("avatarType:", avatarType);
  //setDisplayText(avatarType);
 // 
