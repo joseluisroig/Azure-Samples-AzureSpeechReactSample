@@ -26,7 +26,7 @@ const App = () => {
 
   const streamIdRef = useRef(null);
   const sessionIdRef = useRef(null);
-  const usuario = "Elena"; // ver usuario, poasar a variable no es constante
+  //const usuario = "Elena"; // ver usuario, poasar a variable no es constante
 
   const SPEECH_KEY = '0c029cad0e45489fa76bca71569b0f3e';
   const SPEECH_REGION = 'westeurope';
@@ -48,6 +48,7 @@ const App = () => {
 
  const urlParams = new URLSearchParams(window.location.search);
  const avatarType = urlParams.get('avatar');
+ const usuarioType = urlParams.get('usuario');
  console.log("avatarType:", avatarType);
  //setDisplayText(avatarType);
 // 
