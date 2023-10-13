@@ -26,7 +26,7 @@ const App = () => {
 
   const streamIdRef = useRef(null);
   const sessionIdRef = useRef(null);
-  const usuario = "joseluis"; // ver usuario, poasar a variable no es constante
+  const usuario = "Elena"; // ver usuario, poasar a variable no es constante
 
   const SPEECH_KEY = '0c029cad0e45489fa76bca71569b0f3e';
   const SPEECH_REGION = 'westeurope';
@@ -339,7 +339,7 @@ useEffect(() => {
 
     try {
       console.log("Trying to get chat response");
-      const response = await fetch(`https://ceu-chatcompletion-python.azurewebsites.net/api/ceuavatarcompletion?session_id=${streamIdRef.current}&mensaje=${user_message}&usuario=${usuario}&avatar=${avatar.current}`);
+      const response = await fetch(`https://ceu-chatcompletion-python.azurewebsites.net/api/ceuavatarcompletion?session_id=${streamIdRef.current}&mensaje=${user_message}&usuario=${usuario}&avatar=${avatar}`);
       let chatText = await response.text();
       console.log("Received chat response:", chatText);
       console.log("streamIdRef.current:", streamIdRef.current);

@@ -21,7 +21,7 @@ video {
     object-fit: cover; /* para mantener las proporciones */
 }
 
-p {
+p, button {
     position: absolute;
     z-index: 1; /* para asegurarse de que se muestren por encima del video */
 }
@@ -36,12 +36,15 @@ p {
 }
 
 button {
+    bottom: env(safe-area-inset-bottom, 10px); /* Usar el área segura si está disponible, de lo contrario, usar 10px */
+    left: 10px;
     cursor: pointer;
     padding: 10px 20px;
     border: none;
     border-radius: 12px; /* bordes redondeados */
     background-color: #00aaff; /* azul claro */
     color: #ffffff; /* texto en blanco */
+    z-index: 1; /* para asegurarse de que se muestre por encima del video */
     transition: background-color 0.3s ease;
 }
 
@@ -52,10 +55,9 @@ button:hover {
 /* Ajustes para pantallas pequeñas */
 @media (max-height: 600px) {
     button {
-        margin-bottom: calc(env(safe-area-inset-bottom, 5px) + 5px); /* Añadir un margen inferior para evitar la superposición con la barra de direcciones */
+        bottom: calc(env(safe-area-inset-bottom, 5px) + 15px); /* Añadir 5px adicionales para más espacio */
     }
 }
-
 
 
 
