@@ -38,7 +38,7 @@ p {
 /* ... tus otros estilos ... */
 
 button {
-    bottom: env(safe-area-inset-bottom, 20px); /* Aumentado a 20px como valor por defecto */
+    bottom: 50vh; /* Ajusta este valor para probar */
     left: 10px;
     cursor: pointer;
     padding: 10px 20px;
@@ -46,16 +46,13 @@ button {
     border-radius: 12px;
     background-color: #00aaff;
     color: #ffffff;
-    z-index: 1;
+    z-index: 2; /* Aumentar para asegurarse de que se superpone a otros elementos */
     transition: background-color 0.3s ease;
 }
 
-button:hover {
-    background-color: #0088cc;
-}
-
-@media (max-height: 600px) { /* Ajustado a 600px */
+@media (max-height: 600px) {
     button {
-        bottom: calc(env(safe-area-inset-bottom, 10px) + 20px); /* Aumentado a 20px adicionales */
+        bottom: calc(50vh + env(safe-area-inset-bottom)); /* Ajusta este valor para probar */
     }
 }
+
