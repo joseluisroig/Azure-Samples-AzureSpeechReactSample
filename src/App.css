@@ -35,29 +35,27 @@ p {
     border-radius: 5px;
 }
 
+/* ... tus otros estilos ... */
+
 button {
-    bottom: env(safe-area-inset-bottom, 10px); /* Usar el área segura si está disponible, de lo contrario, usar 10px */
+    bottom: env(safe-area-inset-bottom, 20px); /* Aumentado a 20px como valor por defecto */
     left: 10px;
     cursor: pointer;
     padding: 10px 20px;
     border: none;
-    border-radius: 12px; /* bordes redondeados */
-    background-color: #00aaff; /* azul claro */
-    color: #ffffff; /* texto en blanco */
-    z-index: 1; /* para asegurarse de que se muestre por encima del video */
+    border-radius: 12px;
+    background-color: #00aaff;
+    color: #ffffff;
+    z-index: 1;
     transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #0088cc; /* un tono de azul un poco más oscuro al pasar el cursor */
+    background-color: #0088cc;
 }
 
-/* Ajustes para pantallas pequeñas */
-@media (max-height: 600px) {
+@media (max-height: 600px) { /* Ajustado a 600px */
     button {
-        bottom: calc(env(safe-area-inset-bottom, 5px) + 35px); /* Añadir 5px adicionales para más espacio */
+        bottom: calc(env(safe-area-inset-bottom, 10px) + 20px); /* Aumentado a 20px adicionales */
     }
 }
-
-
-
