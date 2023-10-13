@@ -52,3 +52,11 @@ button:hover {
     background-color: #0088cc; /* un tono de azul un poco más oscuro al pasar el cursor */
 }
 
+/* Ajustes para pantallas pequeñas */
+@media (max-height: 600px) {
+    button {
+        bottom: 5px;
+    }
+}
+
+
