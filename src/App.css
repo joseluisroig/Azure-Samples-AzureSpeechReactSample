@@ -1,77 +1,54 @@
-/* App.css */
-
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
 .container {
-    max-width: 100%;
-    margin: 0px auto;
-    padding: 5px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    width: 100%;
+    height: 100vh; /* 100% de la altura de la ventana del navegador */
+    margin: 0;
+    padding: 0;
+}
+
+video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    object-fit: cover; /* para mantener las proporciones */
+}
+
+p, button {
+    position: absolute;
+    z-index: 1; /* para asegurarse de que se muestren por encima del video */
+}
+
+p {
+    bottom: 50px;
+    left: 10px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5); /* fondo semi-transparente */
+    padding: 10px;
+    border-radius: 5px;
 }
 
 button {
+    bottom: 10px;
+    left: 10px;
     cursor: pointer;
     padding: 10px 20px;
     border: none;
-    border-radius: 5px;
-    background-color: #007BFF;
-    color: #fff;
+    border-radius: 12px; /* bordes redondeados */
+    background-color: #00aaff; /* azul claro */
+    color: #ffffff; /* texto en blanco */
+    z-index: 1; /* para asegurarse de que se muestre por encima del video */
     transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #0088cc; /* un tono de azul un poco más oscuro al pasar el cursor */
 }
 
-button:disabled {
-    background-color: #c0c0c0;
-}
-
-.chat-box {
-    border: 1px solid #ddd;
-    padding: 20px;
-    height: 300px;
-    overflow-y: auto;
-    margin-bottom: 20px;
-}
-
-.avatar-image {
-    display: block;
-    max-width: 100px;
-    margin: 20px auto;
-}
-
-video {
-    width: 640px; /* Ancho deseado */
-    height: 660px; /* Altura deseada */
-    object-fit: cover; /* Esto hará que el video y la imagen póster se ajusten al tamaño especificado, manteniendo su relación de aspecto */
-}
-
-
-
-
-.header {
-    background-color: #007BFF;
-    color: white;
-    padding: 0px 0;
-    text-align: center;
-  }
-  
-  .menu {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-  }
-  
-  .menu button {
-    background-color: #0056b3;
-  }
-  
-  .main {
-    margin-top: 0px;
-  }
-  
