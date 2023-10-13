@@ -27,7 +27,7 @@ p, button {
 }
 
 p {
-    bottom: 50px;
+    bottom: 12vh;
     left: 10px;
     color: white;
     background-color: rgba(0, 0, 0, 0.5); /* fondo semi-transparente */
@@ -38,7 +38,7 @@ p {
 /* ... tus otros estilos ... */
 
 button {
-    bottom: 50vh; /* Ajusta este valor para probar */
+    bottom: 8vh; /* Ajusta este valor para probar */
     left: 10px;
     cursor: pointer;
     padding: 10px 20px;
@@ -52,7 +52,7 @@ button {
 
 @media (max-height: 600px) {
     button {
-        bottom: calc(50vh + env(safe-area-inset-bottom)); /* Ajusta este valor para probar */
+        bottom: calc(8vh + env(safe-area-inset-bottom)); /* Ajusta este valor para probar */
     }
 }
 
