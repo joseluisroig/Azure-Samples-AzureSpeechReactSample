@@ -37,7 +37,7 @@ const App = () => {
   const [avatarImgUrl, setAvatarImgUrl] = useState('');
   const [azureVoiceId, setAzureVoiceId] = useState('');
   const [speechRecognitionLanguage, setSpeechRecognitionLanguage] = useState('');
-  const [avatar, setAvatar] = useState('roig'); // Changed from useRef to useState
+  //const [avatar, setAvatar] = useState(''); // Changed from useRef to useState
   const [videoInicial, setVideoInicial] = useState('');
   
   
@@ -68,7 +68,7 @@ useEffect(() => {
         setAzureVoiceId(jsonResponse['azureVoiceId']);
         setSpeechRecognitionLanguage(jsonResponse['speechRecognitionLanguage']);
         setVideoInicial(jsonResponse['videoInicial']);
-        setAvatar(avatarType);
+        //setAvatar(avatarType);
 
       }
     } catch (error) {
@@ -343,7 +343,7 @@ useEffect(() => {
 
     try {
       console.log("Trying to get chat response");
-      const response = await fetch(`https://ceu-chatcompletion-python.azurewebsites.net/api/ceuavatarcompletion?session_id=${streamIdRef.current}&mensaje=${user_message}&usuario=${usuario}&avatar=${avatar}`);
+      const response = await fetch(`https://ceu-chatcompletion-python.azurewebsites.net/api/ceuavatarcompletion?session_id=${streamIdRef.current}&mensaje=${user_message}&usuario=${usuario}&avatar=${avatarType}`);
       let chatText = await response.text();
       console.log("Received chat response:", chatText);
       console.log("streamIdRef.current:", streamIdRef.current);
@@ -423,6 +423,7 @@ useEffect(() => {
         <ReactPlayer 
           url={videoInicial}
           playing={true}
+          style={{ position: 'absolute', top: 0, left: 0 }}
           width='100%'
           height='100%'
           onEnded={handleVideoEnd}
