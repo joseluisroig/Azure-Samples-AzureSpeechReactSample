@@ -38,6 +38,7 @@ const App = () => {
   const [azureVoiceId, setAzureVoiceId] = useState('');
   const [speechRecognitionLanguage, setSpeechRecognitionLanguage] = useState('');
   const [avatar, setAvatar] = useState('roig'); // Changed from useRef to useState
+  const [videoInicial, setVideoInicial] = useState('');
   
   
   //// Removed this line as it's now managed by useState
@@ -66,6 +67,7 @@ useEffect(() => {
         setAvatarImgUrl(jsonResponse['avatarImgUrl']);
         setAzureVoiceId(jsonResponse['azureVoiceId']);
         setSpeechRecognitionLanguage(jsonResponse['speechRecognitionLanguage']);
+        setVideoInicial(jsonResponse['videoInicial']);
         setAvatar(avatarType);
 
       }
@@ -388,6 +390,7 @@ useEffect(() => {
   const handleVideoEnd = () => {
     // Cambiar a tu streaming en vivo aquí
     setShowStreaming(true);
+    
 
     // Iniciar tu streaming y asignar el stream al elemento de video
     // Por ejemplo: talkVideoRef.current.srcObject = tuStream;
@@ -418,7 +421,7 @@ useEffect(() => {
         // Mostrar video de YouTube
         <div style={{ width: '100%', height: '100vh' }}>
         <ReactPlayer 
-          url='https://vimeo.com/779301723?share=copy'
+          url={videoInicial}
           playing={true}
           width='100%'
           height='100%'
