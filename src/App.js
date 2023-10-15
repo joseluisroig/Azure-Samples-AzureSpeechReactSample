@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as speechsdk from "microsoft-cognitiveservices-speech-sdk";
+import ReactPlayer from 'react-player';
 //import TextToSpeech from './TextToSpeech.js';
 //import FileUpload from './FileUpload';
 //import Header from "./Header";
@@ -381,7 +382,16 @@ useEffect(() => {
   };
 
 
+  const [showStreaming, setShowStreaming] = useState(false);
 
+
+  const handleVideoEnd = () => {
+    // Cambiar a tu streaming en vivo aquí
+    setShowStreaming(true);
+
+    // Iniciar tu streaming y asignar el stream al elemento de video
+    // Por ejemplo: talkVideoRef.current.srcObject = tuStream;
+  };
   
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -394,25 +404,44 @@ useEffect(() => {
   
  //connect(0);
   
-  return (
-   
-    <div className="container">
-      
+ return (
+  <div className="App">
+    <main>
+      { showStreaming ? (
+        // Mostrar streaming en vivo
+        <>
+          <video ref={talkVideoRef} autoPlay playsInline poster={avatarImgUrl} />
+          <p>{displayText}</p>
+          <button onClick={sttFromMic}>Pulsa para hablar</button>
+        </>
+      ) : (
+        // Mostrar video de YouTube
+        <div style={{ width: '100%', height: '100vh' }}>
+        <ReactPlayer 
+          url='https://vimeo.com/779301723?share=copy'
+          playing={true}
+          width='100%'
+          height='100%'
+          onEnded={handleVideoEnd}
+          config={{
+            vimeo: {
+              playerOptions: {
+                byline: false, // Oculta la línea de créditos
+                portrait: false, // Oculta el avatar del usuario
+                title: false, // Oculta el título del video
+                color: 'ffffff', // Establece el color del reproductor
+              }
+            }
+          }}
+/>
 
-      
-      <header className="header">
-        
 
-      </header>
-      
-      <main>
-        <video ref={talkVideoRef} autoPlay playsInline poster={avatarImgUrl} />
-        <p>{displayText}</p>
-        <button onClick={sttFromMic}>Pulsa para hablar</button>
-      </main>
-    </div>
-  );
-  }  
+        </div>
+      )}
+    </main>
+  </div>
+);
+}
 // Path: src/App.js
 
 //<input ref={chatInputRef} type="text" placeholder="Type here for chat..." />
