@@ -1,0 +1,141 @@
+section,
+.container,
+.container-fluid {
+  position: relative;
+  word-wrap: break-word;
+}
+.mbr-section-title {
+  font-size: 6.5rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-style: bold;
+  line-height: 1.3;
+}
+.mbr-section-subtitle {
+  line-height: 1.3;
+}
+.mbr-text {
+  font-style: normal;
+  line-height: 1.7;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.media-container-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  align-items: flex-start;
+
+}
+.media-container-row .media-size-item {
+  width: 400px;
+}
+.media-container-column {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  align-items: stretch;
+}
+
+.media-container-row {
+    flex-wrap: nowrap;
+  }
+
+.container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+.container-fluid {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+@media (min-width: 768px) and (max-width: 991px)
+.mbr-container {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+@media (max-width: 767px)
+.mbr-container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+.card-wrapper,
+.item-wrapper {
+  overflow: hidden;
+  background-color: rgb(236, 239, 238);
+  margin-top: 60px;
+}
+
+
+.item-title {
+  font-size: 2.0em;
+  font-weight: normal;
+  margin-bottom: 0.5em;
+  text-align: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.item-subtitle {
+  font-size: 1.2em;
+  color: #777;
+  margin-bottom: 1em;
+}
+.mbr-text {
+  font-size: 1em;
+  line-height: 1.5;
+}
+
+.features4 {
+  padding: 2em 0;
+  background-color: #f9f9f9;
+}
+
+/* Estilos para el contenedor */
+.mbr-section-head {
+  text-align: center;
+  margin-bottom: 1em;
+}
+.item-img img {
+  max-width: 100%;
+  border-bottom: 1px solid #ccc;
+}
+
+/* Estilos para el contenido de la tarjeta */
+.item-content {
+  padding: 1em 0;
+}
+
+.header15 {
+  padding-top: 2px;
+  padding-bottom: 15px;
+  margin-top: 0;
+}
+
+.item-btn {
+  text-align: center;
+  padding-top: 1em;
+  background-color: cornflowerblue;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  /* color de la fuente blanca */
+  color: #fff;
+  /* alineación del botón centrado */
+
+}
+
+.mbr-section-btn.item-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;  /* Nuevo margen inferior */
+}
+
+
+/* Establecer los márgenes izquierdo y derecho */
+.texto-margin-tarjetas {
+  margin-left: 20px;
+  margin-right: 20px;
+}

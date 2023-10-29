@@ -1,0 +1,41 @@
+.menu {
+  background-color: #000; /* Fondo negro */
+  color: #FFA500; /* Título del logo en naranja */
+  padding: 20px 0; /* Aumenta el espacio vertical para hacer el menú más alto */
+}
+
+.navbar-logo img {
+  height: 50px; /* Tamaño del logo (ajusta según tus necesidades) */
+}
+
+.navbar-brand {
+  /* Añadir cualquier estilo específico para la marca aquí */
+}
+
+.menu {
+  background-color: #000;
+  color: #FFF;
+  text-align: center;
+  padding: 20px;
+}
+
+.menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: right;
+}
+
+.menu-item {
+  margin: 0 20px;
+  font-size: 16px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.menu-link {
+  color: #FFF;
+  text-decoration: none;
+}
+
+

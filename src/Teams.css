@@ -1,0 +1,50 @@
+/* Estilos para la sección del equipo */
+.team1 {
+    background-color: #f8f8f8; /* Color de fondo */
+    padding: 30px 0; /* Espaciado interior superior e inferior */
+    text-align: center; /* Alineación del contenido al centro */
+}
+
+/* Estilos para los títulos */
+.mbr-section-title {
+    font-size: 36px; /* Tamaño de fuente del título */
+    color: #0f0f10; /* Color del texto */
+    font-style: bold; /* Estilo de fuente en negrita */
+}
+
+/* Estilos para los subtítulos */
+.mbr-section-subtitle {
+    font-size: 18px; /* Tamaño de fuente del subtítulo */
+    color: #777; /* Color del texto */
+    margin-top: 20px; /* Espacio superior */
+}
+
+/* Estilos para las tarjetas de equipo */
+.card-wrap {
+    background-color: #fff; /* Color de fondo de la tarjeta */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    padding: 20px; /* Espaciado interior de la tarjeta */
+    margin: 20px 0; /* Espacio entre tarjetas */
+}
+
+/* Estilos para las imágenes */
+.image-wrap img {
+    max-width: 100%; /* Imagen ajustada al ancho de su contenedor */
+    border-radius: 20%; /* Bordes redondeados para las imágenes */
+}
+
+/* Estilos para los nombres */
+.card-title {
+    font-size: 24px; /* Tamaño de fuente del nombre */
+    color: #333; /* Color del texto */
+    margin-top: 10px; /* Espacio superior */
+}
+
+/* Estilos para los roles */
+.mbr-role {
+    font-size: 18px; /* Tamaño de fuente del rol */
+    color: #777; /* Color del texto */
+    margin-top: 10px; /* Espacio superior */
+}
+
