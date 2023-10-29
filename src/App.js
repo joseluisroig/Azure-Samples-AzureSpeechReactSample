@@ -4,10 +4,12 @@ import React from "react";
 import Menu from "./Menu.jsx";
 //import Header from "./Header.jsx";
 //import Tarjetas from "./Tarjetas.jsx";
-import TeacherGallery from "./TeachersGallery.jsx";
+
 //import Teams from "./Teams.jsx";
 import AvatarApp from "./AvatarApp.jsx";
+import TeacherGallery from "./TeachersGallery.jsx";
 //import "./App.css";
+import Autenticador from "./Autenticador.jsx";
 
 
 import {
@@ -23,6 +25,7 @@ const App = () => {
     
     <Router>
       <Menu />
+      <Autenticador />
       <Routes>
         <Route path="/teachers" element={<TeacherGallery />} />
         <Route path="/avatar" element={<AvatarApp />} />

@@ -13,7 +13,7 @@ const Header = () => {
       <div className="row justify-content-center">
         <div className="col-12 col-md">
           <div className="text-wrapper">
-            <h2 className="mbr-section-title  display-2">
+            <h2 className="mbr-section-title  ">
               <strong>
                 Personaliza la atención en tu negocio con Human3&nbsp;
               </strong>

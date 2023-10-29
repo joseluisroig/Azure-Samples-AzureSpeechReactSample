@@ -3,7 +3,7 @@ import * as speechsdk from "microsoft-cognitiveservices-speech-sdk";
 import ReactPlayer from 'react-player';
 
 
-//import "./App.css";
+import "./css/avatar.css";
 
 
 const AvatarApp = () => {
@@ -404,14 +404,12 @@ useEffect(() => {
   }, []); // Las dependencias están vacías, por lo que esto se ejecutará sólo una vez después del montaje del componente
   
  //connect(0);
+ 
   
  return (
-  <div className="App">
+  <div className="avatar-component">
     <main>
       
-      
-
-
       { showStreaming ? (
         // Mostrar streaming en vivo
         <>

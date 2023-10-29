@@ -9,7 +9,8 @@ const TeachersGallery = () => {
           text: 'In this beginner\'s English course, we\'ll focus on "modal verbs" such as can, could, should, and must. You\'ll learn how to use them to express ability, possibility, obligation, and advice.',
           imgSrc: 'assets/images/teacher1-2-816x816.png',
           btnText: 'Prueba',
-          btnLink: 'https://metaversolab.es/?avatar=profesor_ingles&usuario=leo'
+          btnLink: '/avatar/?avatar=profesor_ingles&usuario=leo',
+          isInternalLink: true,
         },
         {
           title: 'Modal verbs',

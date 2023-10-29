@@ -1,0 +1,50 @@
+.avatar-component {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Oculta el contenido desbordado */
+}
+
+.avatar-component video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que el video se estire y se escale para llenar la pantalla */
+}
+
+.avatar-component p,
+.avatar-component button {
+    position: absolute;
+    z-index: 1; /* Asegura que se muestren por encima del video */
+}
+
+.avatar-component p {
+    bottom: 14vh;
+    left: 10px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.avatar-component button {
+    bottom: 10vh;
+    left: 10px;
+    cursor: pointer;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 12px;
+    background-color: #00aaff;
+    color: #ffffff;
+    z-index: 2;
+    transition: background-color 0.3s ease;
+}
+
+@media (max-height: 600px) {
+    .avatar-component button {
+        bottom: calc(10vh + env(safe-area-inset-bottom));
+    }
+}
+
+  
