@@ -1,5 +1,8 @@
 
 import 'bootstrap/dist/css/bootstrap.css';
+// index.js o App.js
+import './firebase'; // Asegúrate de que la ruta sea la correcta
+
 
 //import "./css/bootstrap/css/bootstrap.min.css"
 //import "./css/bootstrap/css/bootstrap-grid.min.css"
