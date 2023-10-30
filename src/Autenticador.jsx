@@ -1,22 +1,43 @@
-import React from 'react';
-import { signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from "./firebase";
+import React, { useState, useEffect } from 'react';
+import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+
+const auth = getAuth();
+const googleProvider = new GoogleAuthProvider();
 
 const Autenticador = () => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   const signInWithGoogle = async () => {
-    console.log("Intentando autenticar con Google");  // Depuración
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      console.log("Autenticado con éxito", result.user);  // Depuración
+      setUser(result.user);
     } catch (error) {
-      console.error("Error durante la autenticación", error);  // Depuración
+      console.error("Error durante la autenticación", error);
     }
   };
 
   return (
     <div>
-      <button onClick={signInWithGoogle}>Iniciar sesión con Google</button>
+      {user ? (
+        <span>Bienvenido, {user.displayName}</span>
+      ) : (
+        <button 
+          style={{ background: 'none', border: 'none', color: 'blue', textDecoration: 'underline', cursor: 'pointer' }} 
+          onClick={signInWithGoogle}
+        >
+          Iniciar sesión con Google
+        </button>
+      )}
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import './css/menu.css'; // Asegúrate de que la ruta sea la correcta
+import Autenticador from './Autenticador';
 
 const Menu = () => {
   return (
@@ -13,6 +14,9 @@ const Menu = () => {
         </li>
         <li className="menu-item">
           <a href="#contacta" className="menu-link">Contacta</a>
+        </li>
+        <li className="menu-item">
+          <Autenticador />
         </li>
       </ul>
     </div>
